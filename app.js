@@ -1,9 +1,21 @@
-const { app, BrowserWindow } = require("electron");
+const { app, screen, BrowserWindow } = require("electron");
+const windowState = require("electron-window-state");
 
 let mainWindow;
 
 function createWindow() {
+  const { workAreaSize } = screen.getPrimaryDisplay();
+
+  const mainWindowState = windowState({
+    defaultWidth: workAreaSize.width - 200,
+    defaultHeight: workAreaSize.height - 100,
+  });
+
   mainWindow = new BrowserWindow({
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     minWidth: 300,
     minHeight: 300,
     center: true,
@@ -12,6 +24,8 @@ function createWindow() {
       contextIsolation: false,
     },
   });
+
+  mainWindowState.manage(mainWindow);
 
   mainWindow.loadURL("https://classroom.google.com");
 }
