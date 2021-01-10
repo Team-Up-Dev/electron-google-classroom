@@ -4,7 +4,7 @@
   "description": "Unofficial google classroom desktop app, build with electronjs",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Team-Up-Dev/electron-google-classroom/issues"
   },
-  "homepage": "https://github.com/Team-Up-Dev/electron-google-classroom#readme"
+  "homepage": "https://github.com/Team-Up-Dev/electron-google-classroom#readme",
+  "devDependencies": {
+    "electron": "^11.1.1"
+  }
 }
