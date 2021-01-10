@@ -1,5 +1,6 @@
 const { app, screen, BrowserWindow } = require("electron");
 const windowState = require("electron-window-state");
+const path = require("path");
 
 const { userAgent } = require("./utils/config");
 
@@ -25,6 +26,7 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: false,
     },
+    icon: path.join(__dirname, "icons/png/64x64.png"),
   });
 
   mainWindowState.manage(mainWindow);
