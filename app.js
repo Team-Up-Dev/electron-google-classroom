@@ -1,6 +1,8 @@
 const { app, screen, BrowserWindow } = require("electron");
 const windowState = require("electron-window-state");
 
+const { userAgent } = require("./utils/config");
+
 let mainWindow;
 
 function createWindow() {
@@ -27,7 +29,7 @@ function createWindow() {
 
   mainWindowState.manage(mainWindow);
 
-  mainWindow.loadURL("https://classroom.google.com");
+  mainWindow.loadURL("https://classroom.google.com", { userAgent });
 }
 
 app.whenReady().then(createWindow);
