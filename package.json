@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/Team-Up-Dev/electron-google-classroom#readme",
   "devDependencies": {
-    "electron": "^11.1.1"
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1"
   },
   "dependencies": {
     "electron-window-state": "^5.0.3"
