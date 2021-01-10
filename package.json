@@ -4,13 +4,27 @@
   "description": "Unofficial google classroom desktop app, build with electronjs",
   "main": "app.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "org.teamupdev.gcr",
+    "productName": "Unofficial Google Classroom Desktop",
+    "target": "deb",
+    "linux": {
+      "target": "deb",
+      "icon": "icons/png/256x256.png"
+    }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Team-Up-Dev/electron-google-classroom.git"
   },
-  "author": "Ezra Khairan Permana",
+  "author": {
+    "name": "Ezra Khairan Permana",
+    "email": "ezrakhairan123@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Team-Up-Dev/electron-google-classroom/issues"
