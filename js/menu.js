@@ -1,4 +1,6 @@
+const { app, Menu, Tray } = require("electron");
 const { default: openAboutWindow } = require("about-window");
+const path = require("path");
 
 const appInfo = require("../package.json");
 const product_name = "Google Classroom Desktop";
@@ -24,9 +26,38 @@ const template = [
     submenu: [
       { label: `About ${product_name}`, click: about },
       { type: "separator" },
-      { label: "Quit", accelerator: "CmdOrCtrl+Q", role: "quit" },
+      {
+        label: "Quit",
+        accelerator: "CmdOrCtrl+Q",
+        click: () => {
+          app.isQuiting = true;
+          app.quit();
+        },
+      },
     ],
   },
 ];
 
-module.exports = { template };
+function createTray(mainWindow) {
+  const contextMenu = Menu.buildFromTemplate([
+    { label: "About App", click: about },
+    { type: "separator" },
+    {
+      label: "Show App",
+      click: () => void mainWindow.show(),
+    },
+    {
+      label: "Quit",
+      click: () => {
+        app.isQuiting = true;
+        app.quit();
+      },
+    },
+  ]);
+
+  tray = new Tray(path.join(__dirname, "..", "icons", "png", "24x24.png"));
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip(product_name);
+}
+
+module.exports = { template, createTray };

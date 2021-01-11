@@ -3,9 +3,10 @@ const windowState = require("electron-window-state");
 const path = require("path");
 
 const { userAgent } = require("./js/config");
-const { template } = require("./js/menu");
+const { template, createTray } = require("./js/menu");
 
 let mainWindow;
+let tray;
 
 function createWindow() {
   const { workAreaSize } = screen.getPrimaryDisplay();
@@ -36,6 +37,22 @@ function createWindow() {
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
+
+  tray = createTray(mainWindow);
+
+  mainWindow.on("minimize", (event) => {
+    event.preventDefault();
+    mainWindow.hide();
+  });
+
+  mainWindow.on("close", (event) => {
+    if (!app.isQuiting) {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+
+    return false;
+  });
 }
 
 app.whenReady().then(createWindow);
