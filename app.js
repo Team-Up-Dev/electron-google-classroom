@@ -1,8 +1,9 @@
-const { app, screen, BrowserWindow } = require("electron");
+const { app, screen, BrowserWindow, Menu } = require("electron");
 const windowState = require("electron-window-state");
 const path = require("path");
 
-const { userAgent } = require("./utils/config");
+const { userAgent } = require("./js/config");
+const { template } = require("./js/menu");
 
 let mainWindow;
 
@@ -32,6 +33,9 @@ function createWindow() {
   mainWindowState.manage(mainWindow);
 
   mainWindow.loadURL("https://classroom.google.com", { userAgent });
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 }
 
 app.whenReady().then(createWindow);
