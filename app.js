@@ -1,4 +1,4 @@
-const { app, screen, BrowserWindow, Menu } = require("electron");
+const { app, screen, BrowserWindow, Menu, ipcMain } = require("electron");
 const windowState = require("electron-window-state");
 const path = require("path");
 
@@ -25,7 +25,8 @@ function createWindow() {
     minHeight: 300,
     center: true,
     webPreferences: {
-      nodeIntegration: false,
+      preload: path.join(__dirname, "js", "preload.js"),
+      nodeIntegration: true,
       contextIsolation: false,
     },
     icon: path.join(__dirname, "icons/png/64x64.png"),
@@ -52,6 +53,10 @@ function createWindow() {
     }
 
     return false;
+  });
+
+  ipcMain.on("online-status-changed", (event, status) => {
+    console.log(status);
   });
 }
 

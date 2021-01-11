@@ -3,6 +3,7 @@ const { default: openAboutWindow } = require("about-window");
 const path = require("path");
 
 const appInfo = require("../package.json");
+const { isDevelopment } = require("./config");
 const product_name = "Google Classroom Desktop";
 
 const about = () => {
@@ -37,6 +38,17 @@ const template = [
     ],
   },
 ];
+
+if (isDevelopment) {
+  template.push({
+    label: "Debug",
+    submenu: [
+      {
+        role: "toggledevtools",
+      },
+    ],
+  });
+}
 
 function createTray(mainWindow) {
   const contextMenu = Menu.buildFromTemplate([
