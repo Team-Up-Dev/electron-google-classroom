@@ -14,7 +14,8 @@
     "target": "deb",
     "linux": {
       "target": "deb",
-      "icon": "icons/png/256x256.png"
+      "icon": "icons/png/256x256.png",
+      "category": "Education"
     }
   },
   "repository": {
