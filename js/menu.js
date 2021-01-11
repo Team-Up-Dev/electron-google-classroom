@@ -21,34 +21,65 @@ const about = () => {
   });
 };
 
-const template = [
-  {
-    label: "Application",
-    submenu: [
-      { label: `About ${product_name}`, click: about },
-      { type: "separator" },
-      {
-        label: "Quit",
-        accelerator: "CmdOrCtrl+Q",
-        click: () => {
-          app.isQuiting = true;
-          app.quit();
-        },
-      },
-    ],
-  },
-];
+const template = (win) => {
+  const navigate = (href) => win.webContents.send("navigate:classroom", href);
 
-if (isDevelopment) {
-  template.push({
-    label: "Debug",
-    submenu: [
-      {
-        role: "toggledevtools",
-      },
-    ],
-  });
-}
+  const template = [
+    {
+      label: "Application",
+      submenu: [
+        { label: `About ${product_name}`, click: about },
+        { type: "separator" },
+        {
+          label: "Quit",
+          accelerator: "CmdOrCtrl+Q",
+          click: () => {
+            app.isQuiting = true;
+            app.quit();
+          },
+        },
+      ],
+    },
+    {
+      label: "Classroom",
+      submenu: [
+        {
+          label: "Classes",
+          click: () => navigate("/h"),
+        },
+        {
+          label: "Calendar",
+          click: () => navigate("/calendar/this-week/course/all"),
+        },
+        {
+          label: "To-do",
+          click: () => navigate("/a/not-turned-in/all"),
+        },
+        {
+          label: "Archived classess",
+          click: () => navigate("/h/archived"),
+        },
+        {
+          label: "Settings",
+          click: () => navigate("/s"),
+        },
+      ],
+    },
+  ];
+
+  if (isDevelopment) {
+    template.push({
+      label: "Debug",
+      submenu: [
+        {
+          role: "toggledevtools",
+        },
+      ],
+    });
+  }
+
+  return template;
+};
 
 function createTray(mainWindow) {
   const contextMenu = Menu.buildFromTemplate([

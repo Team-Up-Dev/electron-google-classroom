@@ -36,7 +36,7 @@ function createWindow() {
 
   mainWindow.loadURL("https://classroom.google.com", { userAgent });
 
-  const menu = Menu.buildFromTemplate(template);
+  const menu = Menu.buildFromTemplate(template(mainWindow));
   Menu.setApplicationMenu(menu);
 
   tray = createTray(mainWindow);
@@ -56,7 +56,7 @@ function createWindow() {
   });
 
   ipcMain.on("online-status-changed", (event, status) => {
-    console.log(status);
+    // console.log(status);
   });
 }
 
