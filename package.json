@@ -11,11 +11,21 @@
   "build": {
     "appId": "org.teamupdev.gcr",
     "productName": "Unofficial Google Classroom Desktop",
-    "target": "deb",
     "linux": {
-      "target": "deb",
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
       "icon": "icons/png/256x256.png",
       "category": "Education"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "icons/win/icon.ico"
     }
   },
   "repository": {
