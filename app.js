@@ -67,6 +67,7 @@ if (!SingleInstance) {
 } else {
   app.on("second-instance", () => {
     if (mainWindow) {
+      if (!mainWindow.isVisible()) mainWindow.show();
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
     }

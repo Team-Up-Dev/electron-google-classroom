@@ -98,9 +98,11 @@ function createTray(mainWindow) {
     },
   ]);
 
-  tray = new Tray(path.join(__dirname, "..", "icons", "png", "24x24.png"));
+  let tray = new Tray(path.join(__dirname, "..", "icons", "png", "24x24.png"));
   tray.setContextMenu(contextMenu);
   tray.setToolTip(product_name);
+
+  return tray;
 }
 
 module.exports = { template, createTray };
