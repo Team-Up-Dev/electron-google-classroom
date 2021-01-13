@@ -1,4 +1,4 @@
-const { app, Menu, Tray } = require("electron");
+const { app, Menu, Tray, shell } = require("electron");
 const { default: openAboutWindow } = require("about-window");
 const path = require("path");
 
@@ -30,6 +30,20 @@ const template = (win) => {
       submenu: [
         { label: `About ${product_name}`, click: about },
         { type: "separator" },
+        { role: "reload" },
+        {
+          label: "Source Code",
+          click: () => {
+            const repo = appInfo.repository.url;
+            const url = repo.replace("git+", "").replace(".git", "");
+
+            shell.openExternal(url);
+          },
+        },
+        {
+          label: "Report Bug",
+          click: () => void shell.openExternal(appInfo.bugs.url),
+        },
         {
           label: "Quit",
           accelerator: "CmdOrCtrl+Q",
@@ -83,12 +97,12 @@ const template = (win) => {
 
 function createTray(mainWindow) {
   const contextMenu = Menu.buildFromTemplate([
-    { label: "About App", click: about },
-    { type: "separator" },
     {
       label: "Show App",
       click: () => void mainWindow.show(),
     },
+    { type: "separator" },
+    { label: "About App", click: about },
     {
       label: "Quit",
       click: () => {
