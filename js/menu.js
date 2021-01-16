@@ -1,4 +1,4 @@
-const { app, Menu, Tray, shell } = require("electron");
+const { app, Menu, Tray, shell, ipcMain } = require("electron");
 const { default: openAboutWindow } = require("about-window");
 const path = require("path");
 
@@ -114,7 +114,22 @@ const template = (win) => {
     });
   }
 
-  return template;
+  const menu = Menu.buildFromTemplate(template);
+
+  const lightMenu = menu.getMenuItemById("theme-light");
+  const darkMenu = menu.getMenuItemById("theme-dark");
+
+  ipcMain.on("theme:update", (e, { enabled }) => {
+    if (enabled) {
+      lightMenu.enabled = true;
+      darkMenu.enabled = false;
+    } else {
+      lightMenu.enabled = false;
+      darkMenu.enabled = true;
+    }
+  });
+
+  return menu;
 };
 
 function createTray(mainWindow) {

@@ -1,4 +1,4 @@
-const { app, screen, BrowserWindow, Menu, ipcMain } = require("electron");
+const { app, screen, BrowserWindow, Menu } = require("electron");
 const windowState = require("electron-window-state");
 const path = require("path");
 
@@ -46,11 +46,8 @@ function createWindow() {
 
   mainWindow.loadURL("https://classroom.google.com", { userAgent });
 
-  const menu = Menu.buildFromTemplate(template(mainWindow));
+  const menu = template(mainWindow);
   Menu.setApplicationMenu(menu);
-
-  const lightMenu = menu.getMenuItemById("theme-light");
-  const darkMenu = menu.getMenuItemById("theme-dark");
 
   tray = createTray(mainWindow);
 
@@ -66,16 +63,6 @@ function createWindow() {
     }
 
     return false;
-  });
-
-  ipcMain.on("theme:update", (e, { enabled }) => {
-    if (enabled) {
-      lightMenu.enabled = true;
-      darkMenu.enabled = false;
-    } else {
-      lightMenu.enabled = false;
-      darkMenu.enabled = true;
-    }
   });
 }
 
