@@ -5,6 +5,7 @@ const path = require("path");
 const appInfo = require("../package.json");
 const { isDevelopment } = require("./config");
 const product_name = "Google Classroom Desktop";
+const store = require("./store");
 
 const about = () =>
   void openAboutWindow({
@@ -90,14 +91,20 @@ const template = (win) => {
         {
           label: "Light",
           id: "theme-light",
-          enabled: false,
-          click: () => theme("light"),
+          enabled: store.get("theme") === "dark",
+          click: () => {
+            theme("light");
+            store.set("theme", "light");
+          },
         },
         {
           label: "Dark",
           id: "theme-dark",
-          enabled: true,
-          click: () => theme("dark"),
+          enabled: store.get("theme") === "light",
+          click: () => {
+            theme("dark");
+            store.set("theme", "dark");
+          },
         },
       ],
     },
@@ -128,6 +135,8 @@ const template = (win) => {
       darkMenu.enabled = true;
     }
   });
+
+  ipcMain.on("theme:request", () => theme(store.get("theme")));
 
   return menu;
 };

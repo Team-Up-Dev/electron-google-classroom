@@ -26,3 +26,7 @@ ipcRenderer.on("theme:light", () => {
   DisableDarkMode();
   ipcRenderer.send("theme:update", { enabled: false });
 });
+
+document.addEventListener("DOMContentLoaded", () =>
+  ipcRenderer.send("theme:request")
+);
