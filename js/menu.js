@@ -89,10 +89,14 @@ const template = (win) => {
         { type: "separator" },
         {
           label: "Light",
+          id: "theme-light",
+          enabled: false,
           click: () => theme("light"),
         },
         {
           label: "Dark",
+          id: "theme-dark",
+          enabled: true,
           click: () => theme("dark"),
         },
       ],

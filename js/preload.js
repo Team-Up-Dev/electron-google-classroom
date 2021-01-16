@@ -1,12 +1,6 @@
 const { ipcRenderer } = require("electron");
 const { DisableDarkMode, EnableDarkMode } = require("./theme");
 
-const updateOnlineStatus = () => {
-  ipcRenderer.send(
-    "online-status-changed",
-    navigator.onLine ? "online" : "offline"
-  );
-};
 function eventFire(el, etype) {
   if ("FireEvent" in el) {
     el.fireEvent("on" + etype);
@@ -24,10 +18,11 @@ ipcRenderer.on("navigate:classroom", (e, href) => {
   }
 });
 
-ipcRenderer.on("theme:dark", () => void EnableDarkMode());
-ipcRenderer.on("theme:light", () => void DisableDarkMode());
-
-window.addEventListener("online", updateOnlineStatus);
-window.addEventListener("offline", updateOnlineStatus);
-
-updateOnlineStatus();
+ipcRenderer.on("theme:dark", () => {
+  EnableDarkMode();
+  ipcRenderer.send("theme:update", { enabled: true });
+});
+ipcRenderer.on("theme:light", () => {
+  DisableDarkMode();
+  ipcRenderer.send("theme:update", { enabled: false });
+});

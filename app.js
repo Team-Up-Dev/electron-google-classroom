@@ -49,6 +49,9 @@ function createWindow() {
   const menu = Menu.buildFromTemplate(template(mainWindow));
   Menu.setApplicationMenu(menu);
 
+  const lightMenu = menu.getMenuItemById("theme-light");
+  const darkMenu = menu.getMenuItemById("theme-dark");
+
   tray = createTray(mainWindow);
 
   mainWindow.on("minimize", (event) => {
@@ -65,8 +68,14 @@ function createWindow() {
     return false;
   });
 
-  ipcMain.on("online-status-changed", (event, status) => {
-    // console.log(status);
+  ipcMain.on("theme:update", (e, { enabled }) => {
+    if (enabled) {
+      lightMenu.enabled = true;
+      darkMenu.enabled = false;
+    } else {
+      lightMenu.enabled = false;
+      darkMenu.enabled = true;
+    }
   });
 }
 
