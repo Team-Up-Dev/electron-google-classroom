@@ -2,11 +2,20 @@ const { app, screen, BrowserWindow, Menu, ipcMain } = require("electron");
 const windowState = require("electron-window-state");
 const path = require("path");
 
-const { userAgent } = require("./js/config");
+const { userAgent, isDevelopment } = require("./js/config");
 const { template, createTray } = require("./js/menu");
 
 let mainWindow;
 let tray;
+
+if (isDevelopment) {
+  try {
+    require("electron-reload")(__dirname, {
+      electron: path.join(__dirname, "node_modules", ".bin", "electron"),
+      hardResetMethod: "exit",
+    });
+  } catch (_) {}
+}
 
 function createWindow() {
   const { workAreaSize } = screen.getPrimaryDisplay();

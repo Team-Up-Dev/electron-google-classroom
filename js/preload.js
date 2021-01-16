@@ -1,4 +1,5 @@
 const { ipcRenderer } = require("electron");
+const { DisableDarkMode, EnableDarkMode } = require("./theme");
 
 const updateOnlineStatus = () => {
   ipcRenderer.send(
@@ -22,6 +23,9 @@ ipcRenderer.on("navigate:classroom", (e, href) => {
       eventFire(document.querySelector(`a[href="${href}"]`), "click");
   }
 });
+
+ipcRenderer.on("theme:dark", () => void EnableDarkMode());
+ipcRenderer.on("theme:light", () => void DisableDarkMode());
 
 window.addEventListener("online", updateOnlineStatus);
 window.addEventListener("offline", updateOnlineStatus);

@@ -6,8 +6,8 @@ const appInfo = require("../package.json");
 const { isDevelopment } = require("./config");
 const product_name = "Google Classroom Desktop";
 
-const about = () => {
-  openAboutWindow({
+const about = () =>
+  void openAboutWindow({
     product_name,
     icon_path: `${__dirname}/../icons/png/512x512.png`,
     package_json_dir: `${__dirname}/../`,
@@ -19,10 +19,10 @@ const about = () => {
       open_devtools: true,
     },
   });
-};
 
 const template = (win) => {
   const navigate = (href) => win.webContents.send("navigate:classroom", href);
+  const theme = (mode) => win.webContents.send(`theme:${mode}`);
 
   const template = [
     {
@@ -76,6 +76,24 @@ const template = (win) => {
         {
           label: "Settings",
           click: () => navigate("/s"),
+        },
+      ],
+    },
+    {
+      label: "Preferences",
+      submenu: [
+        {
+          label: "Theme Mode",
+          enabled: false,
+        },
+        { type: "separator" },
+        {
+          label: "Light",
+          click: () => theme("light"),
+        },
+        {
+          label: "Dark",
+          click: () => theme("dark"),
         },
       ],
     },
